@@ -1,6 +1,5 @@
 mod builder;
-mod deserializer;
 mod nonempty_map;
 mod parser;
-mod seralizer;
+mod schema;
 mod traits;

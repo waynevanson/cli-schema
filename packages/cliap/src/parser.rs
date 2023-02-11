@@ -1,3 +1,4 @@
+use crate::builder::LabelKind;
 use combine::{
     eof, optional,
     parser::repeat::sep_by1,
@@ -8,14 +9,8 @@ use combine::{
     Parser,
 };
 
-use crate::builder::LabelKind;
-
 fn dash<'a>() -> impl Parser<&'a str> {
     char('-')
-}
-
-fn dashes<'a>() -> impl Parser<&'a str> {
-    string("--")
 }
 
 fn short_identifier<'a>() -> impl Parser<&'a str, Output = char> {
@@ -44,7 +39,7 @@ pub fn flag<'a>() -> impl Parser<&'a str, Output = ((String, LabelKind), Option<
         .map(|char| char.to_string())
         .map(|identifier| (identifier, LabelKind::Short));
 
-    let long_flag = dashes()
+    let long_flag = string("--")
         .with(long_identifier())
         .map(|identifier| (identifier, LabelKind::Long));
 
